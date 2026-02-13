@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Valentine’s Bunny</title>
+    <style>
+        body {
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, #ff758c, #ff7eb3);
+            font-family: 'Segoe UI', sans-serif;
+            margin: 0;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .card {
+            background: white;
+            padding: 50px;
+            border-radius: 20px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            z-index: 10;
+            position: relative;
+        }
+
+        h1 {
+            color: #ff4d6d;
+            margin-bottom: 30px;
+            font-size: 2rem;
+        }
+
+        button {
+            padding: 12px 25px;
+            font-size: 16px;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            margin: 10px;
+            transition: 0.3s;
+        }
+
+        .yes {
+            background: #ff4d6d;
+            color: white;
+        }
+
+        .yes:hover {
+            background: #ff1f4a;
+        }
+
+        .no {
+            background: #e0e0e0;
+            position: absolute;
+        }
+
+        .heart {
+            position: absolute;
+            transform: rotate(45deg);
+            animation: fall linear infinite;
+        }
+
+        .heart::before,
+        .heart::after {
+            content: "";
+            position: absolute;
+            border-radius: 50%;
+        }
+
+        .heart::before { top: -50%; left: 0; }
+        .heart::after { left: 50%; top: 0; }
+
+        @keyframes fall {
+            0% { transform: translateY(0) rotate(45deg); opacity: 1; }
+            100% { transform: translateY(100vh) rotate(45deg); opacity: 0; }
+        }
+    </style>
+</head>
+<body>
+    <audio autoplay loop>
+        <source src="https://www.bensound.com/bensound-music/bensound-romantic.mp3" type="audio/mpeg">
+    </audio>
+
+    <div class="card">
+        <h1>Will you be my Valentine’s Bunny? 🐰💕</h1>
+        <button class="yes" onclick="yesClick()">Yes 💖</button>
+        <button class="no" onmouseover="moveButton()">No 😢</button>
+    </div>
+
+    <script>
+        const noButton = document.querySelector('.no');
+        const noMessages = [
+            "Are you really gonna say no to me, Bunny? 😢",
+            "Please, Bunny 🐰",
+            "Come on, say yes now! 💖",
+            "Don't break my little heart 💔",
+            "If you say no, I will be really sad 😭"
+        ];
+
+        let hoveredNo = false;
+
+        function yesClick() {
+            if (!hoveredNo) {
+                alert("Hmm… try interacting with the No button first 😉");
+                return;
+            }
+            window.location.href = "celebration.html";
+        }
+
+        function moveButton() {
+            hoveredNo = true;
+            const x = Math.random() * (window.innerWidth - 120);
+            const y = Math.random() * (window.innerHeight - 60);
+            noButton.style.left = x + "px";
+            noButton.style.top = y + "px";
+            noButton.textContent = noMessages[Math.floor(Math.random() * noMessages.length)];
+        }
+
+        function createHeart() {
+            const heart = document.createElement("div");
+            heart.classList.add("heart");
+            const size = 10 + Math.random() * 30;
+            heart.style.width = size + "px";
+            heart.style.height = size + "px";
+            const color = ["#ff4d6d","#ff99c8","#ffc0cb","#ff6666","#ffb6c1"];
+            heart.style.background = color[Math.floor(Math.random() * color.length)];
+            heart.style.left = Math.random() * window.innerWidth + "px";
+            heart.style.animationDuration = (3 + Math.random() * 3) + "s";
+            heart.style.boxShadow = "0 0 10px 2px rgba(255,255,255,0.8)";
+            document.body.appendChild(heart);
+            setTimeout(() => heart.remove(), 6000);
+        }
+
+        setInterval(createHeart, 300);
+    </script>
+</body>
+</html>

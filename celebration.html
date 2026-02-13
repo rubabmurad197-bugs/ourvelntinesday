@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Celebration!</title>
+    <style>
+        body {
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: #ffccd5;
+            font-family: 'Segoe UI', sans-serif;
+            margin: 0;
+            overflow: hidden;
+            position: relative;
+        }
+
+        h1 {
+            font-size: 3rem;
+            color: #ff1f4a;
+            text-align: center;
+            z-index: 10;
+            position: relative;
+            animation: bounce 1s infinite alternate, sparkle 1s infinite;
+        }
+
+        @keyframes bounce {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(-20px); }
+        }
+
+        @keyframes sparkle {
+            0%,100% { text-shadow: 0 0 5px #fff,0 0 10px #ffb6c1,0 0 15px #ff4d6d; }
+            50% { text-shadow: 0 0 20px #fff,0 0 30px #ff99c8,0 0 40px #ff4d6d; }
+        }
+
+        .heart {
+            position: absolute;
+            transform: rotate(45deg);
+            animation: fall linear infinite;
+        }
+
+        .heart::before,
+        .heart::after {
+            content: "";
+            position: absolute;
+            border-radius: 50%;
+        }
+
+        .heart::before { top: -50%; left: 0; }
+        .heart::after { left: 50%; top: 0; }
+
+        @keyframes fall {
+            0% { transform: translateY(0) rotate(45deg); opacity: 1; }
+            100% { transform: translateY(100vh) rotate(45deg); opacity: 0; }
+        }
+    </style>
+</head>
+<body>
+    <audio autoplay loop>
+        <source src="https://www.bensound.com/bensound-music/bensound-happyrock.mp3" type="audio/mpeg">
+    </audio>
+
+    <h1>🎉 I knew you would say yes! 💖🐰🎉</h1>
+
+    <script>
+        function createHeart() {
+            const heart = document.createElement("div");
+            heart.classList.add("heart");
+            const size = 10 + Math.random() * 40;
+            heart.style.width = size + "px";
+            heart.style.height = size + "px";
+            const color = ["#ff4d6d","#ff99c8","#ffc0cb","#ff6666","#ffb6c1"];
+            heart.style.background = color[Math.floor(Math.random() * color.length)];
+            heart.style.left = Math.random() * window.innerWidth + "px";
+            heart.style.animationDuration = (2 + Math.random() * 2) + "s";
+            heart.style.boxShadow = "0 0 10px 2px rgba(255,255,255,0.8)";
+            document.body.appendChild(heart);
+            setTimeout(() => heart.remove(), 5000);
+        }
+
+        setInterval(createHeart, 200);
+    </script>
+</body>
+</html>
